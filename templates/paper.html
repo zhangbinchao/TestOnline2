@@ -1,0 +1,604 @@
+﻿{% load staticfiles %}
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html;charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>考试页面</title>
+
+<link href="{% static 'css1/main.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'css1/iconfont.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'css1/test.css' %}" rel="stylesheet" type="text/css" />
+    <link type="text/css" rel="styleSheet"  href="http://at.alicdn.com/t/font_1367795_bx5ini5jcl.css" />
+
+<style>
+.hasBeenAnswer {
+	background: #5d9cec;
+	color:#fff;
+}
+
+    .time-item strong {
+	background:#C71C60;
+	color:#fff;
+	line-height:49px;
+	font-size:36px;
+	font-family:Arial;
+	padding:0 10px;
+	margin-right:10px;
+	border-radius:5px;
+	box-shadow:1px 1px 3px rgba(0,0,0,0.2);
+}
+</style>
+
+</head>
+<body>
+<div class="main">
+	<!--nr start-->
+	<div class="test_main">
+		<div class="nr_left">
+			<div class="test">
+				<form action="" method="post" id="form1">
+                {% csrf_token %}
+					<div class="test_title">
+{#						<p class="test_time">#}
+{#							<i class="icon iconfont">&#xe6fb;</i><b class="alt-1">00:01</b>#}
+{#						</p>#}
+						<font><input type="button" name="test_jiaojuan" value="交卷" onclick="submitForm()"></font>
+					</div>
+					
+						<div class="test_content">
+							<div class="test_content_title">
+								<h2>单选题</h2>
+								<p>
+									<span>共</span><i class="content_lit">{{ papers_list.single_choice_num}}</i><span>题，</span><span>合计</span><i class="content_fs">{{ single_choice_score}}</i><span>分</span>
+								</p>
+							</div>
+						</div>
+						<div class="test_content_nr">
+							<ul>
+
+                                {% for question_now in question %}
+                                    {% if question_now.questionType == 'xz' %}
+{#                                        <from id="{{ question_now.id }}">#}
+                                        <li id="{{ question_now.id }}">
+                                                <div class="test_content_nr_tt">
+                                                    <i>{{ forloop.counter }}</i><font>{{ question_now.content }}</font>
+                                                </div>
+
+                                                <div class="test_content_nr_main">
+                                                    <ul>
+                                                            <li class="option">
+
+                                                                    <input type="radio" class="radioOrCheck" name="{{ question_now.id }}"
+                                                                        id="{{ question_now.id }}_option_1" value="A"
+                                                                    />
+
+
+                                                                <label for="{{ question_now.id }}_option_1">
+
+                                                                    <p class="ue" style="display: inline;">{{ question_now.choice_a }}</p>
+                                                                </label>
+                                                            </li>
+
+                                                            <li class="option">
+
+                                                                    <input type="radio" class="radioOrCheck" name="{{ question_now.id }}"
+                                                                        id="{{ question_now.id }}_option_2" value="B"
+                                                                    />
+
+
+                                                                <label for="{{ question_now.id }}_option_2">
+
+                                                                    <p class="ue" style="display: inline;">{{ question_now.choice_b }}</p>
+                                                                </label>
+                                                            </li>
+
+                                                            <li class="option">
+
+                                                                    <input type="radio" class="radioOrCheck" name="{{ question_now.id }}"
+                                                                        id="{{ question_now.id }}_option_3" value="C"
+                                                                    />
+
+                                                                <label for="{{ question_now.id }}_option_3">
+
+                                                                    <p class="ue" style="display: inline;">{{ question_now.choice_c }}</p>
+                                                                </label>
+                                                            </li>
+
+                                                            <li class="option">
+
+                                                                    <input type="radio" class="radioOrCheck" name="{{ question_now.id }}"
+                                                                        id="{{ question_now.id }}_option_4" value="D"
+                                                                    />
+
+
+                                                                <label for="{{ question_now.id }}_option_4">
+
+                                                                    <p class="ue" style="display: inline;">{{ question_now.choice_d }}</p>
+                                                                </label>
+                                                            </li>
+
+                                                    </ul>
+                                                </div>
+                                            </li>
+{#                                        </from>#}
+                                    {% endif %}
+
+                                {% endfor %}
+							</ul>
+						</div>
+
+                        <div class="test_content">
+							<div class="test_content_title">
+								<h2>判断题</h2>
+								<p>
+									<span>共</span><i class="content_lit">{{ papers_list.judgment}}</i><span>题，</span><span>合计</span><i class="content_fs">{{ judgment_score}}</i><span>分</span>
+								</p>
+							</div>
+						</div>
+						<div class="test_content_nr">
+							<ul>
+                                {% for question_now in question %}
+                                    {% if question_now.questionType == 'pd' %}
+{#                                        <from id="{{ question_now.id }}">#}
+                                        <li id="{{ question_now.id }}">
+                                                <div class="test_content_nr_tt">
+                                                    <i>{{ forloop.counter }}</i><font>{{ question_now.content }}</font><b class="icon iconfont">&#xe881;</b>
+                                                </div>
+
+                                                <div class="test_content_nr_main">
+                                                    <ul>
+                                                            <li class="option">
+
+                                                                    <input type="radio" class="radioOrCheck" name="{{ question_now.id }}"
+                                                                        id="{{ question_now.id }}_option_1" value="True"
+                                                                    />
+
+
+                                                                <label for="{{ question_now.id }}_option_1">
+
+                                                                    <p class="ue" style="display: inline;">{{ question_now.boolt }}</p>
+                                                                </label>
+                                                            </li>
+
+                                                            <li class="option">
+
+                                                                    <input type="radio" class="radioOrCheck" name="{{ question_now.id }}"
+                                                                        id="{{ question_now.id }}_option_2" value="False"
+                                                                    />
+
+
+                                                                <label for="{{ question_now.id }}_option_2">
+
+                                                                    <p class="ue" style="display: inline;">{{ question_now.boolf }}</p>
+                                                                </label>
+                                                            </li>
+
+                                                    </ul>
+                                                </div>
+                                            </li>
+{#                                        </from>#}
+                                    {% endif %}
+                                {% endfor %}
+							</ul>
+						</div>
+
+						<div class="test_content">
+							<div class="test_content_title">
+								<h2>多选题</h2>
+								<p>
+									<span>共</span><i class="content_lit">{{ papers_list.multiple_choice_num}}</i><span>题，</span><span>合计</span><i class="content_fs">{{ multiple_choice_score}}</i><span>分</span>
+								</p>
+							</div>
+						</div>
+						<div class="test_content_nr">
+							<ul>
+                                {% for question_now in question %}
+                                    {% if question_now.questionType == 'mxz' %}
+{#                                        <from id="{{ question_now.id }}">#}
+                                        <li id="{{ question_now.id }}">
+                                                <div class="test_content_nr_tt">
+                                                    <i>{{ forloop.counter }}</i><font>{{ question_now.content }}</font><b class="icon iconfont">&#xe881;</b>
+                                                </div>
+
+                                                <div class="test_content_nr_main">
+
+                                                    {% if question_now.choice_num == 4 %}
+                                                    <ul>
+                                                        <li class="option">
+
+
+															<input type="checkbox" class="radioOrCheck" name="{{ question_now.id }}_1"
+																id="{{ question_now.id }}_option_1" value="A"
+															/>
+
+														<label for="{{ question_now.id }}_option_1">
+
+															<p class="ue" style="display: inline;">{{ question_now.choice_a }}</p>
+														</label>
+													</li>
+
+													<li class="option">
+
+
+															<input type="checkbox" class="radioOrCheck" name="{{ question_now.id }}_2"
+																id="{{ question_now.id }}_option_2" value="B"
+															/>
+
+														<label for="{{ question_now.id }}_option_2">
+
+															<p class="ue" style="display: inline;">{{ question_now.choice_b }}</p>
+														</label>
+													</li>
+
+													<li class="option">
+
+
+															<input type="checkbox" class="radioOrCheck" name="{{ question_now.id }}_3"
+																id="{{ question_now.id }}_option_3" value="C"
+															/>
+
+														<label for="{{ question_now.id }}_option_3">
+
+															<p class="ue" style="display: inline;">{{ question_now.choice_c }}</p>
+														</label>
+													</li>
+
+													<li class="option">
+
+
+															<input type="checkbox" class="radioOrCheck" name="{{ question_now.id }}_4"
+																id="{{ question_now.id }}_option_4" value="D"
+															/>
+
+														<label for="{{ question_now.id }}_option_4">
+
+															<p class="ue" style="display: inline;">{{ question_now.choice_d }}</p>
+														</label>
+													</li>
+
+
+                                                    </ul>
+                                                    {% endif %}
+                                                    {% if question_now.choice_num == 5 %}
+                                                    <ul>
+                                                        <li class="option">
+
+
+															<input type="checkbox" class="radioOrCheck" name="{{ question_now.id }}_1"
+																id="{{ question_now.id }}_option_1" value="A"
+															/>
+
+														<label for="{{ question_now.id }}_option_1">
+
+															<p class="ue" style="display: inline;">{{ question_now.choice_a }}</p>
+														</label>
+													</li>
+
+													<li class="option">
+
+
+															<input type="checkbox" class="radioOrCheck" name="{{ question_now.id }}_2"
+																id="{{ question_now.id }}_option_2" value="B"
+															/>
+
+														<label for="{{ question_now.id }}_option_2">
+
+															<p class="ue" style="display: inline;">{{ question_now.choice_b }}</p>
+														</label>
+													</li>
+
+													<li class="option">
+
+
+															<input type="checkbox" class="radioOrCheck" name="{{ question_now.id }}_3"
+																id="{{ question_now.id }}_option_3" value="C"
+															/>
+
+														<label for="{{ question_now.id }}_option_3">
+
+															<p class="ue" style="display: inline;">{{ question_now.choice_c }}</p>
+														</label>
+													</li>
+
+													<li class="option">
+
+
+															<input type="checkbox" class="radioOrCheck" name="{{ question_now.id }}_4"
+																id="{{ question_now.id }}_option_4" value="D"
+															/>
+
+														<label for="{{ question_now.id }}_option_4">
+
+															<p class="ue" style="display: inline;">{{ question_now.choice_d }}</p>
+														</label>
+													</li>
+                                                    <li class="option">
+
+
+															<input type="checkbox" class="radioOrCheck" name="{{ question_now.id }}_5"
+																id="{{ question_now.id }}_option_5" value="E"
+															/>
+
+														<label for="{{ question_now.id }}_option_5">
+
+															<p class="ue" style="display: inline;">{{ question_now.choice_e }}</p>
+														</label>
+													</li>
+
+
+                                                    </ul>
+                                                    {% endif %}
+                                                    {% if question_now.choice_num == 6 %}
+                                                    <ul>
+                                                        <li class="option">
+
+
+															<input type="checkbox" class="radioOrCheck" name="{{ question_now.id }}_1"
+																id="{{ question_now.id }}_option_1" value="A"
+															/>
+
+														<label for="{{ question_now.id }}_option_1">
+
+															<p class="ue" style="display: inline;">{{ question_now.choice_a }}</p>
+														</label>
+													</li>
+
+													<li class="option">
+
+
+															<input type="checkbox" class="radioOrCheck" name="{{ question_now.id }}_2"
+																id="{{ question_now.id }}_option_2" value="B"
+															/>
+
+														<label for="{{ question_now.id }}_option_2">
+
+															<p class="ue" style="display: inline;">{{ question_now.choice_b }}</p>
+														</label>
+													</li>
+
+													<li class="option">
+
+
+															<input type="checkbox" class="radioOrCheck" name="{{ question_now.id }}_3"
+																id="{{ question_now.id }}_option_3" value="C"
+															/>
+
+														<label for="{{ question_now.id }}_option_3">
+
+															<p class="ue" style="display: inline;">{{ question_now.choice_c }}</p>
+														</label>
+													</li>
+
+													<li class="option">
+
+
+															<input type="checkbox" class="radioOrCheck" name="{{ question_now.id }}_4"
+																id="{{ question_now.id }}_option_4" value="D"
+															/>
+
+														<label for="{{ question_now.id }}_option_4">
+
+															<p class="ue" style="display: inline;">{{ question_now.choice_d }}</p>
+														</label>
+													</li>
+                                                        <li class="option">
+
+
+															<input type="checkbox" class="radioOrCheck" name="{{ question_now.id }}_5"
+																id="{{ question_now.id }}_option_5" value="E"
+															/>
+
+														<label for="{{ question_now.id }}_option_5">
+
+															<p class="ue" style="display: inline;">{{ question_now.choice_e }}</p>
+														</label>
+													</li>
+                                                        <li class="option">
+
+
+															<input type="checkbox" class="radioOrCheck" name="{{ question_now.id }}_6"
+																id="{{ question_now.id }}_option_6" value="F"
+															/>
+
+														<label for="{{ question_now.id }}_option_6">
+
+															<p class="ue" style="display: inline;">{{ question_now.choice_f }}</p>
+														</label>
+													</li>
+
+
+                                                    </ul>
+                                                    {% endif %}
+                                                </div>
+                                        </li>
+{#                                        </from>#}
+                                    {% endif %}
+                                {% endfor %}
+							</ul>
+						</div>
+
+					
+				</form>
+			</div>
+
+		</div>
+		<div class="nr_right">
+			<div class="nr_rt_main">
+				<div class="rt_nr1">
+					<div class="rt_nr1_title">
+						<h1>
+							答题卡
+						</h1>
+{#						<p class="test_time">#}
+{#							<i class="icon iconfont">&#xe6fb;</i><b class="alt-1">00:01</b>#}
+{#						</p>#}
+					</div>
+					
+						<div class="rt_content">
+							<div class="rt_content_tt">
+								<h2>单选题</h2>
+								<p>
+									<span>共</span><i class="content_lit">{{ papers_list.single_choice_num}}</i><span>题</span>
+								</p>
+							</div>
+							<div class="rt_content_nr answerSheet">
+								<ul>
+                                {% for question_now in question %}
+									{% if question_now.questionType == 'xz' %}
+										<li><a href="#{{ question_now.id }}">{{ forloop.counter }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+									
+								</ul>
+							</div>
+						</div>
+
+                    <div class="rt_content">
+							<div class="rt_content_tt">
+								<h2>判断题</h2>
+								<p>
+									<span>共</span><i class="content_lit">{{ papers_list.judgment}}</i><span>题</span>
+								</p>
+							</div>
+							<div class="rt_content_nr answerSheet">
+								<ul>
+
+                                {% for question_now in question %}
+									{% if question_now.questionType == 'pd' %}
+										<li><a href="#{{ question_now.id }}">{{ forloop.counter }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+
+								</ul>
+							</div>
+						</div>
+					
+						<div class="rt_content">
+							<div class="rt_content_tt">
+								<h2>多选题</h2>
+								<p>
+									<span>共</span><i class="content_lit">{{ papers_list.multiple_choice_num}}</i><span>题</span>
+								</p>
+							</div>
+							<div class="rt_content_nr answerSheet">
+								<ul>
+
+                                {% for question_now in question %}
+									{% if question_now.questionType == 'mxz' %}
+										<li><a href="#{{ question_now.id }}">{{ forloop.counter }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+
+								</ul>
+							</div>
+						</div>
+                <h1>考试剩余时间</h1>
+<div class="time-item">
+{#    <span id="day_show">0天</span>#}
+{#    <strong id="hour_show">0时</strong>#}
+    <strong id="minute_show">0分</strong>
+    <strong id="second_show">0秒</strong>
+</div>
+					
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!--nr end-->
+	<div class="foot"></div>
+</div>
+
+<script src="{% static 'js1/jquery-1.11.3.min.js' %}"></script>
+<script src="{% static 'js1/jquery.easy-pie-chart.js' %}"></script>
+<!--时间js-->
+<script src="{% static 'js1/jquery.countdown.js' %}"></script>
+<script>
+	window.jQuery(function($) {
+		"use strict";
+		
+		$('time').countDown({
+			with_separators : false
+		});
+		$('.alt-1').countDown({
+			css_class : 'countdown-alt-1'
+		});
+		$('.alt-2').countDown({
+			css_class : 'countdown-alt-2'
+		});
+		
+	});
+	
+	
+	$(function() {
+		$('li.option label').click(function() {
+		debugger;
+			var examId = $(this).closest('.test_content_nr_main').closest('li').attr('id'); // 得到题目ID
+			var cardLi = $('a[href=#' + examId + ']'); // 根据题目ID找到对应答题卡
+			// 设置已答题
+			if(!cardLi.hasClass('hasBeenAnswer')){
+				cardLi.addClass('hasBeenAnswer');
+			}
+			
+		});
+	});
+</script>
+
+<script type="text/javascript">
+        function submitForm() {
+            document.getElementById("form1").submit();
+        }
+</script>
+
+<script type="text/javascript">
+        function submitForm() {
+            document.getElementById("form1").submit();
+        }
+
+var intDiff = parseInt(600); //倒计时总秒数量
+function timer(intDiff) {
+    window.setInterval(function() {
+        var day = 0,
+            hour = 0,
+            minute = 0,
+            second = 0; //时间默认值
+        if (intDiff > 0) {
+            day = Math.floor(intDiff / (60 * 60 * 24));
+            hour = Math.floor(intDiff / (60 * 60)) - (day * 24);
+            minute = Math.floor(intDiff / 60) - (day * 24 * 60) - (hour * 60);
+            second = Math.floor(intDiff) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
+        }
+        if (minute <= 9) minute = '0' + minute;
+        if (second <= 9) second = '0' + second;
+        $('#day_show').html(day + "天");
+        $('#hour_show').html('<s id="h"></s>' + hour + '时');
+        $('#minute_show').html('<s></s>' + minute + '分');
+        $('#second_show').html('<s></s>' + second + '秒');
+        intDiff--;
+        if (intDiff ==0) {submitForm()}
+
+    }, 1000);
+}
+$(function() {
+    timer(intDiff);
+});
+
+
+</script>
+
+
+<script type="text/javascript">
+        //防止页面后退
+        history.pushState(null, null, document.URL);
+        window.addEventListener('popstate', function () {
+            history.pushState(null, null, document.URL);
+        });
+</script>
+
+<div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';">
+<p>copyright: bc_zhang 2019</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,572 @@
+{% load staticfiles %}
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html;charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>模拟训练</title>
+
+<link href="{% static 'css1/main.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'css1/iconfont.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'css1/test.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
+<style>
+.hasBeenAnswer {
+	background: #5d9cec;
+	color:#fff;
+}
+
+       .yongyin {
+     width:120px;
+     height: 35px;
+     text-align:center;
+     line-height:100%;
+     padding:0.3em;
+     font:25px Arial,sans-serif bold;
+     font-style:normal;
+     text-decoration:none;
+     margin:2px;
+     vertical-align:text-bottom;
+     zoom:1;
+     outline:none;
+     font-size-adjust:none;
+     font-stretch:normal;
+     border-radius:0px;
+     box-shadow:0px 1px 2px rgba(0,0,0,0.2);
+     text-shadow:0px 1px 1px rgba(0,0,0,0.3);
+     color: #ffffff;
+     border:0.2px solid #389fc3;
+     background-repeat:repeat;
+     background-size:auto;
+     background-origin:padding-box;
+     background-clip:padding-box;
+     background-color: #389fc3;
+     background: linear-gradient(to bottom, #afecff 0%, #389fc3 100%);
+}
+
+.yongyin:hover {
+    background: #389fc3;
+}
+
+a{ text-decoration:none; color: #ffffff;font-size:15px;}
+
+</style>
+
+
+
+
+</head>
+
+<div class="main">
+	<!--nr start-->
+	<div class="test_main">
+		<div class="nr_left">
+			<div class="test">
+				<form action="" method="post" id="form1">
+                {% csrf_token %}
+
+
+        <div class="test_content">
+            <div class="test_content_title">
+                {% if question_now.questionType == 'xz' %}
+                    <h2>单选题</h2>
+
+                {% endif %}
+                {% if question_now.questionType == 'pd' %}
+                    <h2>判断题</h2>
+                {% endif %}
+                {% if question_now.questionType == 'mxz' %}
+                    <h2>多选题</h2>
+                {% endif %}
+                <p>
+                    <span>第</span><i class="content_lit">{{ question_now.id}}</i><span>题，</span><span>共</span><i class="content_fs">{{ question_count}}</i><span>题</span>
+                </p>
+            </div>
+        </div>
+        <div class="test_content_nr">
+            <ul>
+            {% if question_now.questionType == 'xz' %}
+                <li id="{{ question_now.id }}">
+                    <div class="test_content_nr_tt">
+                        <i>{{ question_now.id }}</i><font>{{ question_now.content }}</font><b class="icon iconfont">&#xe881;</b>
+                    </div>
+                        <div class="test_content_nr_main">
+                                <ul>
+                                        <li class="option">
+
+                                                <input type="radio" class="radioOrCheck" name="{{ question_now.id }}"
+                                                    id="{{ question_now.id }}_option_1" value="A"
+                                                />
+
+
+                                            <label for="{{ question_now.id }}_option_1">
+
+                                                <p class="ue" style="display: inline;">{{ question_now.choice_a }}</p>
+                                            </label>
+                                        </li>
+
+                                        <li class="option">
+
+                                                <input type="radio" class="radioOrCheck" name="{{ question_now.id }}"
+                                                    id="{{ question_now.id }}_option_2" value="B"
+                                                />
+
+
+                                            <label for="{{ question_now.id }}_option_2">
+
+                                                <p class="ue" style="display: inline;">{{ question_now.choice_b }}</p>
+                                            </label>
+                                        </li>
+
+                                        <li class="option">
+
+                                                <input type="radio" class="radioOrCheck" name="{{ question_now.id }}"
+                                                    id="{{ question_now.id }}_option_3" value="C"
+                                                />
+
+                                            <label for="{{ question_now.id }}_option_3">
+
+                                                <p class="ue" style="display: inline;">{{ question_now.choice_c }}</p>
+                                            </label>
+                                        </li>
+
+                                        <li class="option">
+
+                                                <input type="radio" class="radioOrCheck" name="{{ question_now.id }}"
+                                                    id="{{ question_now.id }}_option_4" value="D"
+                                                />
+
+
+                                            <label for="{{ question_now.id }}_option_4">
+
+                                                <p class="ue" style="display: inline;">{{ question_now.choice_d }}</p>
+                                            </label>
+                                        </li>
+
+                                </ul>
+                            </div>
+                </li>
+            {% endif %}
+            {% if question_now.questionType == 'pd' %}
+                <li id="{{ question_now.id }}">
+                    <div class="test_content_nr_tt">
+                        <i>{{ question_now.id }}</i><font>{{ question_now.content }}</font><b class="icon iconfont">&#xe881;</b>
+                    </div>
+                    <div class="test_content_nr_main">
+                        <ul>
+                                <li class="option">
+
+                                        <input type="radio" class="radioOrCheck" name="{{ question_now.id }}"
+                                            id="{{ question_now.id }}_option_1" value="True"
+                                        />
+
+
+                                    <label for="{{ question_now.id }}_option_1">
+
+                                        <p class="ue" style="display: inline;">{{ question_now.boolt }}</p>
+                                    </label>
+                                </li>
+
+                                <li class="option">
+
+                                        <input type="radio" class="radioOrCheck" name="{{ question_now.id }}"
+                                            id="{{ question_now.id }}_option_2" value="False"
+                                        />
+
+
+                                    <label for="{{ question_now.id }}_option_2">
+
+                                        <p class="ue" style="display: inline;">{{ question_now.boolf }}</p>
+                                    </label>
+                                </li>
+
+                        </ul>
+                    </div>
+
+                </li>
+            {% endif %}
+            {% if question_now.questionType == 'mxz' %}
+                <li id="{{ question_now.id }}">
+                    <div class="test_content_nr_tt">
+                        <i>{{ question_now.id }}</i><font>{{ question_now.content }}</font><b class="icon iconfont">&#xe881;</b>
+                    </div>
+
+                    <div class="test_content_nr_main">
+
+                        {% if question_now.choice_num == 4 %}
+                        <ul>
+                            <li class="option">
+
+
+                                <input type="checkbox" class="radioOrCheck" name="{{ question_now.id }}_1"
+                                    id="{{ question_now.id }}_option_1" value="A"
+                                />
+
+                            <label for="{{ question_now.id }}_option_1">
+
+                                <p class="ue" style="display: inline;">{{ question_now.choice_a }}</p>
+                            </label>
+                        </li>
+
+                        <li class="option">
+
+
+                                <input type="checkbox" class="radioOrCheck" name="{{ question_now.id }}_2"
+                                    id="{{ question_now.id }}_option_2" value="B"
+                                />
+
+                            <label for="{{ question_now.id }}_option_2">
+
+                                <p class="ue" style="display: inline;">{{ question_now.choice_b }}</p>
+                            </label>
+                        </li>
+
+                        <li class="option">
+
+
+                                <input type="checkbox" class="radioOrCheck" name="{{ question_now.id }}_3"
+                                    id="{{ question_now.id }}_option_3" value="C"
+                                />
+
+                            <label for="{{ question_now.id }}_option_3">
+
+                                <p class="ue" style="display: inline;">{{ question_now.choice_c }}</p>
+                            </label>
+                        </li>
+
+                        <li class="option">
+
+
+                                <input type="checkbox" class="radioOrCheck" name="{{ question_now.id }}_4"
+                                    id="{{ question_now.id }}_option_4" value="D"
+                                />
+
+                            <label for="{{ question_now.id }}_option_4">
+
+                                <p class="ue" style="display: inline;">{{ question_now.choice_d }}</p>
+                            </label>
+                        </li>
+
+
+                        </ul>
+                        {% endif %}
+                        {% if question_now.choice_num == 5 %}
+                        <ul>
+                            <li class="option">
+
+
+                                <input type="checkbox" class="radioOrCheck" name="{{ question_now.id }}_1"
+                                    id="{{ question_now.id }}_option_1" value="A"
+                                />
+
+                            <label for="{{ question_now.id }}_option_1">
+
+                                <p class="ue" style="display: inline;">{{ question_now.choice_a }}</p>
+                            </label>
+                        </li>
+
+                        <li class="option">
+
+
+                                <input type="checkbox" class="radioOrCheck" name="{{ question_now.id }}_2"
+                                    id="{{ question_now.id }}_option_2" value="B"
+                                />
+
+                            <label for="{{ question_now.id }}_option_2">
+
+                                <p class="ue" style="display: inline;">{{ question_now.choice_b }}</p>
+                            </label>
+                        </li>
+
+                        <li class="option">
+
+
+                                <input type="checkbox" class="radioOrCheck" name="{{ question_now.id }}_3"
+                                    id="{{ question_now.id }}_option_3" value="C"
+                                />
+
+                            <label for="{{ question_now.id }}_option_3">
+
+                                <p class="ue" style="display: inline;">{{ question_now.choice_c }}</p>
+                            </label>
+                        </li>
+
+                        <li class="option">
+
+
+                                <input type="checkbox" class="radioOrCheck" name="{{ question_now.id }}_4"
+                                    id="{{ question_now.id }}_option_4" value="D"
+                                />
+
+                            <label for="{{ question_now.id }}_option_4">
+
+                                <p class="ue" style="display: inline;">{{ question_now.choice_d }}</p>
+                            </label>
+                        </li>
+                        <li class="option">
+
+
+                                <input type="checkbox" class="radioOrCheck" name="{{ question_now.id }}_5"
+                                    id="{{ question_now.id }}_option_5" value="E"
+                                />
+
+                            <label for="{{ question_now.id }}_option_5">
+
+                                <p class="ue" style="display: inline;">{{ question_now.choice_e }}</p>
+                            </label>
+                        </li>
+
+
+                        </ul>
+                        {% endif %}
+                        {% if question_now.choice_num == 6 %}
+                        <ul>
+                            <li class="option">
+                                <input type="checkbox" class="radioOrCheck" name="{{ question_now.id }}_1"
+                                    id="{{ question_now.id }}_option_1" value="A"
+                                />
+
+                            <label for="{{ question_now.id }}_option_1">
+
+                                <p class="ue" style="display: inline;">{{ question_now.choice_a }}</p>
+                            </label>
+                        </li>
+
+                        <li class="option">
+
+
+                                <input type="checkbox" class="radioOrCheck" name="{{ question_now.id }}_2"
+                                    id="{{ question_now.id }}_option_2" value="B"
+                                />
+
+                            <label for="{{ question_now.id }}_option_2">
+
+                                <p class="ue" style="display: inline;">{{ question_now.choice_b }}</p>
+                            </label>
+                        </li>
+
+                        <li class="option">
+
+
+                                <input type="checkbox" class="radioOrCheck" name="{{ question_now.id }}_3"
+                                    id="{{ question_now.id }}_option_3" value="C"
+                                />
+
+                            <label for="{{ question_now.id }}_option_3">
+
+                                <p class="ue" style="display: inline;">{{ question_now.choice_c }}</p>
+                            </label>
+                        </li>
+
+                        <li class="option">
+
+
+                                <input type="checkbox" class="radioOrCheck" name="{{ question_now.id }}_4"
+                                    id="{{ question_now.id }}_option_4" value="D"
+                                />
+
+                            <label for="{{ question_now.id }}_option_4">
+
+                                <p class="ue" style="display: inline;">{{ question_now.choice_d }}</p>
+                            </label>
+                        </li>
+                            <li class="option">
+
+
+                                <input type="checkbox" class="radioOrCheck" name="{{ question_now.id }}_5"
+                                    id="{{ question_now.id }}_option_5" value="E"
+                                />
+
+                            <label for="{{ question_now.id }}_option_5">
+
+                                <p class="ue" style="display: inline;">{{ question_now.choice_e }}</p>
+                            </label>
+                        </li>
+                            <li class="option">
+
+
+                                <input type="checkbox" class="radioOrCheck" name="{{ question_now.id }}_6"
+                                    id="{{ question_now.id }}_option_6" value="F"
+                                />
+
+                            <label for="{{ question_now.id }}_option_6">
+
+                                <p class="ue" style="display: inline;">{{ question_now.choice_f }}</p>
+                            </label>
+                        </li>
+
+
+                        </ul>
+                        {% endif %}
+                    </div>
+                </li>
+            {% endif %}
+            </ul>
+
+				</form>
+			</div>
+        {% if flag1 == 1%}
+            {% if flag2 == 1%}
+                <p style="color:red">
+                    回答正确，正确答案:{{ question_now.answer }}
+                </p>
+            {% else %}
+                <p style="color:red">
+                    回答错误，正确答案:{{ question_now.answer }}
+                </p>
+            {% endif %}
+        {% endif %}
+
+
+		</div>
+                            <div id = "myajax">
+
+                        </div>
+                        <button class='yongyin' type="button" onclick="loadXMLDoc()">收藏该题</button>
+    <input class='yongyin' type="button" name="test_jiaojuan" value="提交答案" onclick="submitForm()">
+                        <div id = "myDiv"  style="display: none;">
+                            <p style="color:red">
+                                正确答案:{{ question_now.answer }}
+                            </p>
+                            <!-- <p>
+{#                                {{ question_now.note }}#}
+                            </p> -->
+                        </div>
+                        <button class='yongyin' id="myBtn" type='button'>显示答案</button>
+                        <script>
+                        var myBtn  = document.getElementById('myBtn');
+                        var myDiv = document.getElementById('myDiv');
+                        myBtn.onclick = function(){
+                            var val = myDiv.style.display;
+                            if(val == 'none'){
+                                myDiv.style.display = 'block'; //显示
+                            }else{
+                                myDiv.style.display = 'none'; //隐藏
+                            }
+                        }
+                        </script>
+	</div>
+
+
+		<div class="nr_right">
+			<div class="nr_rt_main">
+				<div class="rt_nr1">
+					<div class="rt_nr1_title1">
+
+
+                        {% if question_now.id == 1%}
+                            <p><a href="{% url 'exams:train' next_question_id %}">下一题</a></p>
+                        {% elif question_now.id == question_count %}
+                            <p><a href="{% url 'exams:train' pre_question_id %}">上一题</a></p>
+                        {% else %}
+                            <p><a href="{% url 'exams:train' next_question_id %}">下一题</a></p>
+                            <p><a href="{% url 'exams:train' pre_question_id %}">上一题</a></p>
+                        {% endif %}
+                        <p><a href="{% url 'exams:quittrain' question_now.id %}">退出训练</a></p>
+
+					</div>
+
+
+				</div>
+
+			</div>
+		</div>
+	<!--nr end-->
+	<div class="foot"></div>
+</div>
+
+<script src="{% static 'js1/jquery-1.11.3.min.js' %}"></script>
+<script src="{% static 'js1/jquery.easy-pie-chart.js' %}"></script>
+<!--时间js-->
+<script src="{% static 'js1/jquery.countdown.js' %}"></script>
+<script>
+	window.jQuery(function($) {
+		"use strict";
+
+		$('time').countDown({
+			with_separators : false
+		});
+		$('.alt-1').countDown({
+			css_class : 'countdown-alt-1'
+		});
+		$('.alt-2').countDown({
+			css_class : 'countdown-alt-2'
+		});
+
+	});
+
+
+	$(function() {
+		$('li.option label').click(function() {
+		debugger;
+			var examId = $(this).closest('.test_content_nr_main').closest('li').attr('id'); // 得到题目ID
+			var cardLi = $('a[href=#' + examId + ']'); // 根据题目ID找到对应答题卡
+			// 设置已答题
+			if(!cardLi.hasClass('hasBeenAnswer')){
+				cardLi.addClass('hasBeenAnswer');
+			}
+
+		});
+	});
+</script>
+
+
+ <script type="text/javascript">
+
+    var myBtn  = document.getElementById('myBtn');
+    var myDiv = document.getElementById('myDiv');
+    function myBtn(){
+    var val = myDiv.style.display;
+        if(val == 'none'){
+            myDiv.style.display = 'block'; //显示
+        }else{
+            myDiv.style.display = 'none'; //隐藏
+                            }
+                        }
+    function submitForm() {
+        {#document.getElementById("form1").submit();#}
+        {#var x=document.getElementsByName("form1");#}
+        form1.submit()
+    }
+ </script>
+
+
+<script>
+function loadXMLDoc()
+{
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("myajax").innerHTML=xmlhttp.responseText;
+    }
+}
+xmlhttp.open("GET","/operations/collect/{{question_now.id}}",true);
+xmlhttp.send();
+}
+</script>
+
+<script language="javascript">
+        //防止页面后退
+        history.pushState(null, null, document.URL);
+        window.addEventListener('popstate', function () {
+            history.pushState(null, null, document.URL);
+        });
+</script>
+
+<div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';">
+<p>copyright: bc_zhang 2019</p>
+</div>
+</body>
+</html>
+

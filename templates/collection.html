@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}在线考试系统{% endblock %}
+
+{% block custom_bread %}
+{% endblock %}
+
+{% block content %}
+
+<!--feature start-->
+	<section>
+
+   <style>
+        #mydef {
+            text-align: center;
+        }
+
+        .finish {
+            font-size: 30px;
+            margin: auto;
+        }
+
+        .score {
+            font-size: 50px;
+            color: red;
+        }
+
+      .begin {
+            width: 200px;
+            margin: 0 auto;
+            font: 20px/32px "Micorosoft Yahei";
+        }
+
+        #box1 {
+            width: 600px;
+            margin: 20px auto;
+        }
+
+        #box1 p {
+            font-size: 18px;
+            margin-bottom: 4px;
+        }
+
+       #box2 {
+            width: 250px;
+            margin: 20px auto;
+        }
+
+
+        #box2 p {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .tj {
+            font-size: 16px;
+            margin: auto;
+        }
+
+    </style>
+
+
+         <h1 class="score">你收藏的题目是：</h1>
+                  {% for question_list_now in question_list %}
+                    <div id="box1">
+{#                        {% if question_list_now.questionType == 'xz' %}#}
+                        <from id="{{ question_list_now.id }}">
+
+                            <p>{{ forloop.counter }}.({{ "选择" }}) {{ question_list_now.content }}正确答案({{ question_list_now.answer }}
+)                            <a href="{% url 'operations:del_collect' question_list_now.id %}" onclick="return delete_data()" title="删除"><i class="glyphicon glyphicon-trash text-danger">取消收藏</i></a>
+                            </p>
+
+
+                            <input type="hidden" value="{{ question_list_now.id }}">
+                            <label><input name="{{ question_list_now.id_1 }}" type="radio"
+                                          value="A"/>{{ question_list_now.choice_a }}
+                            </label><br/>
+                            <label><input name="{{ question_list_now.id_2 }}" type="radio"
+                                          value="B"/>{{ question_list_now.choice_b }}
+                            </label><br/>
+                            <label><input name="{{ question_list_now.id_3 }}" type="radio"
+                                          value="C"/>{{question_list_now.choice_c }}
+                            </label><br/>
+                            <label><input name="{{ question_list_now.id_4 }}" type="radio"
+                                          value="D"/>{{ question_list_now.choice_d }}
+                            </label><br/>
+                        </from>
+{#                        {% endif %}#}
+                        {% if wrong_question_now.questionType == 'mxz' %}
+                        <from id="{{ wrong_question_now.id }}" >
+
+                            <p>{{ forloop.counter }}.({{ "多选" }}) {{ wrong_question_now.content }}正确答案({{ wrong_question_now.answer }})</p>
+                            <input type="hidden" value="{{ wrong_question_now.id }}">
+                            <label><input name="{{ wrong_question_now.id }}_1" type="checkbox"
+                                          value="A" />{{ wrong_question_now.choice_a }}
+                            </label><br/>
+                            <label><input name="{{ wrong_question_now.id }}_2" type="checkbox"
+                                          value="B"/>{{ wrong_question_now.choice_b }}
+                            </label><br/>
+                            <label><input name="{{ wrong_question_now.id }}_3" type="checkbox"
+                                          value="C" />{{ wrong_question_now.choice_c }}
+                            </label><br/>
+                            <label><input name="{{ wrong_question_now.id }}_4" type="checkbox"
+                                          value="D" />{{ wrong_question_now.choice_d }}
+                            </label><br/>
+                            <label><input name="{{ wrong_question_now.id }}_5" type="checkbox"
+                                          value="E" />{{ wrong_question_now.choice_e }}
+                            </label><br/>
+                            <label><input name="{{ wrong_question_now.id }}_6" type="checkbox"
+                                          value="F"/>{{ wrong_question_now.choice_f }}
+                            </label><br/>
+                        </from>
+                        {% endif %}
+                        {% if wrong_question_now.questionType == 'pd' %}
+                        <from id="{{ wrong_question_now.id }}">
+
+                            <p>{{ forloop.counter }}.({{ "判断"  }}) {{ wrong_question_now.content }}正确答案({{ wrong_question_now.answer }})</p>
+                            <input type="hidden" value="{{ wrong_question_now.id }}">
+                            <label><input name="{{ wrong_question_now.id }}" type="radio"
+                                          value="True"/>{{ wrong_question_now.boolt }}
+                            </label><br/>
+                            <label><input name="{{ wrong_question_now.id }}" type="radio"
+                                          value="False"/>{{ wrong_question_now.boolf }}
+                            </label><br/>
+                        </from>
+                        {% endif %}
+                            </div>
+
+                    <hr/>
+                {% endfor %}
+	</section>
+<!--feature end-->
+<!--module1 start-->
+
+{% endblock %}
+{% block custom_js %}
+<script language="JavaScript">
+function delete_data() {
+    if(confirm('您确定要取消收藏吗？')){
+        return true;
+    }else{
+        return false;
+    }
+}
+</script>
+<script type="text/javascript" src="{% static 'js/index.js' %}"></script>
+{% endblock %}
+

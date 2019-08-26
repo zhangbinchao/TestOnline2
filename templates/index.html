@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}在线考试系统{% endblock %}
+
+{% block custom_bread %}
+{% endblock %}
+
+{% block content %}
+    <div class="banner">
+			<div class="wp">
+{#				<div class="fl">#}
+					<div class="imgslide">
+                        <ul class="imgs">
+                                <li><a href=""><img width="1200" height="472" src="{% static 'images/banner/2019/banner7.jpg' %}" /></a></li>
+                                <li><a href=""><img width="1200" height="472" src="{% static 'images/banner/2019/banner8.jpg' %}" /></a></li>
+                                <li><a href=""><img width="1200" height="472" src="{% static 'images/banner/2019/banner9.jpg' %}" /></a></li>
+                        </ul>
+                        <div class="unslider-arrow prev"></div>
+                        <div class="unslider-arrow next"></div>
+					</div>
+
+{#				</div>#}
+				</div>
+			</div>
+<!--banner end-->
+<!--feature start-->
+	<section>
+		<div class="wp">
+			<ul class="feature">
+				<li class="feature1">
+					<img href="{% url 'exams:paperlist' %}" class="pic" src="{% static 'images/feature1.png' %}"/>
+					<p class="center"><a href="{% url 'exams:paperlist' %}">开始考试</a></p>
+				</li>
+				<li class="feature2">
+					<img href="{% url 'exams:train' question_record.id %}" class="pic" src="{% static 'images/feature2.png' %}"/>
+					<p class="center"><a href="{% url 'exams:train' question_record.id %}">模拟训练</a></p>
+				</li>
+				<li class="feature3">
+					<img  href="{% url 'operations:history' %}" class="pic" src="{% static 'images/feature3.png' %}"/>
+					<p class="center" ><a href="{% url 'operations:history' %}">历史成绩</a></p>
+				</li>
+				<li class="feature4">
+					<img class="pic" src="{% static 'images/feature4.png' %}"/>
+                    <p class="center"><a href="{% url 'users:user_info' %}">个人中心</a></p>
+				</li>
+			</ul>
+		</div>
+	</section>
+<!--feature end-->
+<!--module1 start-->
+
+{% endblock %}
+{% block custom_js %}
+<script type="text/javascript" src="{% static 'js/index.js' %}"></script>
+{% endblock %}
+
